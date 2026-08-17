@@ -10,22 +10,20 @@
 SELECT
   c.first_name || ' ' || c.last_name AS full_name,
   c.country,
-  SUM(o.amount) AS total_orders,
-  COUNT(o.item) AS item_count
-FROM orders o
-INNER JOIN customers c 
-  ON c.customer_id = o.customer_id 
-INNER JOIN shippings s 
-  ON s.shipping_id = c.customer_id  
-WHERE s.status = 'Delivered'
-  AND c.customer_id IN (
-    SELECT customer_id 
-    FROM orders
-    GROUP BY customer_id
-    HAVING COUNT(item) > 1
-  )
+  COUNT(*) AS total_orders,
+  SUM(o.amount) AS total_amount
+FROM customers c
+JOIN orders o 
+  ON c.customer_id = o.customer_id
+WHERE EXISTS (
+  SELECT 1
+  FROM shippings s
+  WHERE s.status = 'Delivered'
+  AND s.customer = c.customer_id
+)
 GROUP BY
   c.customer_id,
   c.first_name,
   c.last_name,
-  c.country;
+  c.country
+HAVING COUNT(*) >= 2;

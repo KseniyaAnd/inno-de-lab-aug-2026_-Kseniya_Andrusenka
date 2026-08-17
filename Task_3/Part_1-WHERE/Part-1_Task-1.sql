@@ -3,4 +3,4 @@
 SELECT *
 FROM customers c
 WHERE c.country = 'USA'
-  AND c.age >= 25;
+  AND c.age > 25;
