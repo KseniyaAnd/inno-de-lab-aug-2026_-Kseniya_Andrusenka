@@ -17,7 +17,7 @@ def performance_logger(func: Callable[..., Any]) -> Callable[..., Any]:
         оригинальной функции и возвращает её результат.
     """
 
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         start_time = time.perf_counter()
 
         result = func(*args, **kwargs)
