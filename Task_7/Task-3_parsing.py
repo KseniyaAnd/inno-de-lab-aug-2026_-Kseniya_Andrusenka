@@ -28,7 +28,6 @@ connection.update({
 })
 
 # 5. Вывести обновленное содержимое конфигурации connection, используя итерацию по парам ключ-значение.
-print(host)
 print(f"SSL Mode: {ssl_mode}")
 print("Параметры соединения:")
 
