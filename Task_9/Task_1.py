@@ -1,4 +1,6 @@
 class Trainee:
+    """Представляет обычного стажёра с именем, фамилией и текущим количеством баллов."""
+
     def __init__(
         self,
         name: str,
@@ -6,6 +8,7 @@ class Trainee:
         score: int = 0,
         passing_grade: int = 10
     ) -> None:
+        """Инициализирует стажёра и задаёт его начальные параметры."""
         self.name: str = name
         self.surname: str = surname
         self.passing_grade: int = passing_grade
@@ -13,16 +16,19 @@ class Trainee:
 
     @property
     def score(self) -> int:
-        """Returns current trainee score."""
+        """Возвращает текущее количество баллов стажёра."""
         return self.__score
 
     @score.setter
     def score(self, value: int) -> None:
+        """Устанавливает количество баллов с проверкой переданного значения."""
+        # Количество баллов должно быть целым числом.
         if not isinstance(value, int):
             raise ValueError(
                 f"Expected value of type int, got {type(value)}"
             )
 
+        # Количество баллов не может быть отрицательным.
         if value < 0:
             raise ValueError(
                 "The score shouldn't be less than 0!"
@@ -31,23 +37,23 @@ class Trainee:
         self.__score = value
 
     def do_homework(self) -> None:
-        """Increases score by 1"""
+        """Увеличивает количество баллов стажёра за выполненную домашнюю работу."""
         self.score += 1
 
     def miss_homework(self) -> None:
-        """Decreases score by 1"""
+        """Уменьшает количество баллов стажёра за пропущенную домашнюю работу."""
         self.score -= 1
 
     def visit_lecture(self) -> None:
-        """Increases score by 1"""
+        """Увеличивает количество баллов за посещение лекции."""
         self.score += 1
 
     def miss_lecture(self) -> None:
-        """Decreases score by 1"""
+        """Уменьшает количество баллов за пропуск лекции."""
         self.score -= 1
 
     def is_passing(self) -> bool:
-        """Checks whether trainee has passing grade."""
+        """Проверяет, набрал ли стажёр проходное количество баллов."""
         return self.score >= self.passing_grade
 
 
@@ -73,6 +79,7 @@ print(
 )
 
 try:
+    # Пытаемся установить некорректное отрицательное количество баллов.
     trainee.score = -5
 except ValueError as e:
     print(f"Ошибка: {e}")
